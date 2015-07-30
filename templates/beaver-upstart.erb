@@ -1,0 +1,14 @@
+description "ship logs to logstash via beaver"
+
+start on runlevel [2345]
+stop on runlevel [!2345]
+respawn
+
+env BEAVER_MODE=connect
+
+## Redis
+#env BEAVER_TRANSPORT=redis
+#env REDIS_NAMESPACE='logstash'
+#env REDIS_URL='redis://redis:6379/0'
+
+exec /usr/local/bin/beaver -c /etc/beaver.conf --logfile /var/log/beaver.log
