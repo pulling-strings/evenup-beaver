@@ -66,14 +66,6 @@ class beaver::package (
     }
   }
 
-  file { '/etc/init.d/beaver':
-    ensure  => file,
-    mode    => '0555',
-    owner   => 'root',
-    group   => 'root',
-    content => template('beaver/beaver.init.erb'),
-  }
-
   file { '/etc/beaver':
     ensure => 'directory',
     mode   => '0555',

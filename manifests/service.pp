@@ -25,6 +25,24 @@ class beaver::service {
     }
   }
 
+  if $::operatingsystem == 'Ubuntu' {
+    file { '/etc/init/beaver.conf':
+      ensure  => file,
+      mode    => '0555',
+      owner   => 'root',
+      group   => 'root',
+      content => template('beaver/beaver-upstart.erb'),
+    } -> Service['beaver']
+  } else {
+    file { '/etc/init.d/beaver':
+      ensure  => file,
+      mode    => '0555',
+      owner   => 'root',
+      group   => 'root',
+      content => template('beaver/beaver.init.erb'),
+    } -> Service['beaver']
+  }
+
   service { 'beaver':
     ensure => $ensure_real,
     enable => $enable_real,
